@@ -107,16 +107,18 @@ public class ScaperothBackTracking {
      * @return 
      */
     private int findSubsetRecursiveBnB(List<Integer> list, int sum, int level, int n) {
+        int temp_sum = sum;
+        
         if (level == list.size()) {
             return sum;
         }
-        sum += list.get(level);
-        if (sum <= n) {
-            level++;
+        temp_sum += list.get(level);
+        level++;
+        if (temp_sum <= n) {
+            sum = temp_sum;
             sum = findSubsetRecursiveBnB(list, sum, level, n);
+            
         } else {
-            sum -= list.get(level);
-            level++;
             sum = findSubsetRecursiveBnB(list, sum, level, n);
         }
         return sum;
@@ -135,7 +137,7 @@ public class ScaperothBackTracking {
         List<Integer> list1 = new ArrayList();
         List<Integer> list2 = new ArrayList();
 
-        list1 = Arrays.asList(7, 30, 8, 22, 6, 1, 14);
+        list1 = Arrays.asList(6, 30, 8, 22, 7, 1, 14);
         list2 = Arrays.asList(6, 2, 6, 9, 1);
 
         sbt.maxSubsetSub(list1, 19);
