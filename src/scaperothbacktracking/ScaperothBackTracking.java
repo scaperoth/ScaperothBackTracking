@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ScaperothBackTracking {
 
+    int max;
     int[] currency = {1, 5, 10, 25};
     /*MAKE CHANGE FUNCTIONS*/
     /*===============================================================*/
@@ -20,7 +21,7 @@ public class ScaperothBackTracking {
     //amunt of pennies
 
     public void makeChange(int amount) {
-        List<Integer> list = new ArrayList();  // you should declare as List, not ArrayList
+        List<Integer> list = new ArrayList<>();  // you should declare as List, not ArrayList
 
         /*add a position in the least for each coin value*/
         for (int i = 0; i < currency.length; i++) {
@@ -91,37 +92,40 @@ public class ScaperothBackTracking {
      */
     public int maxSubsetSub(List<Integer> list, int n) {
         int sum = 0;
-        sum = findSubsetRecursiveBnB(list, sum, 0, n);
-        System.out.println("L = "+ list.toString());
-        System.out.println("n="+n);
-        System.out.println("Answer = "+sum+"\n");
-        return sum;
+        this.max = 0;
+        findSubsetRecursiveBnB(list, sum, 0, n);
+        System.out.println("L = " + list.toString());
+        System.out.println("n=" + n);
+        System.out.println("Answer = " + max + "\n");
+        return max;
     }
 
     /**
-     * 
+     *
      * @param list
      * @param sum
      * @param level
      * @param n
-     * @return 
+     * @return
      */
-    private int findSubsetRecursiveBnB(List<Integer> list, int sum, int level, int n) {
-        int temp_sum = sum;
-        
+    private void findSubsetRecursiveBnB(List<Integer> list, int sum, int level, int n) {
+
+        if (sum <= n && sum >= max) {
+            max = sum;
+        }
+
         if (level == list.size()) {
-            return sum;
+            return;
         }
-        temp_sum += list.get(level);
-        level++;
-        if (temp_sum <= n) {
-            sum = temp_sum;
-            sum = findSubsetRecursiveBnB(list, sum, level, n);
-            
-        } else {
-            sum = findSubsetRecursiveBnB(list, sum, level, n);
+        System.out.println(max);
+        if (sum + list.get(level) <= n) {
+            findSubsetRecursiveBnB(list, sum + list.get(level), level + 1, n);
         }
-        return sum;
+        findSubsetRecursiveBnB(list, sum, level + 1, n);
+
+    }
+
+    public void promissing() {
     }
     /*===============================================================*/
 
@@ -132,10 +136,10 @@ public class ScaperothBackTracking {
         /*makeChange*/
         sbt.makeChange(27);
         System.out.println("\n==================\n");
-        
+
         /*Max Subsets*/
-        List<Integer> list1 = new ArrayList();
-        List<Integer> list2 = new ArrayList();
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
 
         list1 = Arrays.asList(6, 30, 8, 22, 7, 1, 14);
         list2 = Arrays.asList(6, 2, 6, 9, 1);
